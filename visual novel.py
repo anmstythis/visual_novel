@@ -158,7 +158,7 @@ def going_by_yourself():
             print("Стоп. Получается, я с ним тоже живу? ")
             print("Получается, он меня знает? Прекрасно! Я не так сильно теперь похожа на сталкера.")
             input()
-            print("\"" + n1 + "зайди на почту \", - обратился он ко мне.")
+            print("\"" + n1 + ", зайди на почту \", - обратился он ко мне.")
             input()
             print("На почту? На какую? Какую почту он имеет в виду?")
             while(True):
@@ -173,16 +173,21 @@ def going_by_yourself():
                     input()
                     print("\"Я имел в виду электронную.\"")
                     print("Упс…")
+                    after_mail()
                     break
                 elif mail == 'b':
+                    after_mail()
                     break
                 else:
                     what_to_do()
                     continue
+            break
+
+def after_mail():
     input()
     print("Я зашла в электронную почту.")
     input()
-    invitation()
+    invitation()  
             
             
 def no_choice():
