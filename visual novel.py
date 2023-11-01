@@ -1,5 +1,19 @@
 from PIL import Image
+import json
+import csv
+import os
 
+def saving(data, filename):
+    data = json.dumps(data)
+    data = json.loads(str(data))
+
+    with open(filename, 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+
+def readfile(filename):
+    with open(filename, 'r', encoding='utf-8') as file:
+        return json.load(file)
+    
 def what_to_do():
     print("И... что мне делать?")
 
@@ -20,6 +34,7 @@ def yes_choice():
         print("b.\"…\"")
         w = input()
         word = w.lower()
+
         if word == 'a' or word == 'b':
             break
         else:
@@ -32,6 +47,11 @@ def yes_choice():
         print("b. \"Нет, лучше пойду сама.\"")
         g = input()
         gotosh = g.lower()
+
+        readfile('players.json')
+        player[n1]["going to school status"] = gotosh
+        saving(player, "players.json")
+
         if gotosh == 'a':
             go_to_school()
             break
@@ -56,6 +76,11 @@ def go_to_school():
         print("b. \"Лучше не надо\"")
         a = input()
         ask = a.lower()
+
+        readfile("players.json")
+        player[n1]["ask status"] = ask
+        saving(player, "players.json")
+
         if ask == 'a':
             print("… Я правда это сделала…")
             input()
@@ -112,7 +137,8 @@ def class_list():
         else:
             print("\"Ты учишься в классе B-1\", - кто-то сказал мне.")
             break
-    print("Так как на табло указаны были и кабинеты, я отправилась в кабинет", cabs[1], ".")
+    print("Так как на табло указаны были и кабинеты, я отправилась в кабинет", cabs[3], ".")
+
         
 def going_by_yourself():
     print("Я пошла в школу, не помня, как она выглядит…")
@@ -129,6 +155,11 @@ def going_by_yourself():
         print("b. \"Пойди за юношей. Вдруг вы действительнно знакомы\"")
         s = input()
         sorg = s.lower()
+
+        readfile("players.json")
+        player[n1]["searching school status"] = sorg
+        saving(player, "players.json")
+
         if sorg == 'a':
             print("…Ну ладно. Думаю будет странно преследовать человека, которого я смутно помню.")
             input()
@@ -140,6 +171,7 @@ def going_by_yourself():
 
             input()
             print("Школу я так и не нашла… Но зато осмотрела город.")
+            after_mail()
             break
         if sorg == 'b':
             print("… Я пошла за ним.")
@@ -166,6 +198,11 @@ def going_by_yourself():
                 print("b.\"Электронную \"")
                 m = input()
                 mail = m.lower()
+
+                readfile("players.json")
+                player[n1]["mail status"] = mail
+                saving(player, "players.json")
+
                 if mail == 'a':
                     print("\"Ты куда?\"")
                     input()
@@ -182,13 +219,12 @@ def going_by_yourself():
                     what_to_do()
                     continue
             break
-
+    
 def after_mail():
     input()
     print("Я зашла в электронную почту.")
     input()
-    invitation()  
-            
+    invitation()           
             
 def no_choice():
     print("… Голоса больше не было слышно. Я решила спать дальше. ")
@@ -201,6 +237,11 @@ def no_choice():
     print("b. \"Нет, лучше не стоит\"")
     o = input()
     op = o.lower()
+
+    readfile("players.json")
+    player[n1]["opening door status"] = op
+    saving(player, "players.json")
+
     if op == 'a':
         open_the_door()
     elif op == 'b':
@@ -243,6 +284,11 @@ def open_the_door():
         print("b. \"...\"")
         wh = input()
         who = wh.lower()
+
+        readfile("players.json")
+        player[n1]["mysterious person"] = who
+        saving(player, "players.json")
+
         if who == 'a':
             break
         elif who == 'b':
@@ -275,6 +321,11 @@ def open_the_door():
         print("b. \"Можешь не бежать. Это же все равно сон.\"")
         r = input()
         run = r.lower()
+
+        readfile("players.json")
+        player[n1]["running away from zombie status"] = run
+        saving(player, "players.json")
+
         if run == 'a':
             print("Я стараюсь бежать из-за всех сил.")
             print("Но я бегу слишком медленно…")
@@ -306,6 +357,11 @@ def invitation():
         print("b.\"Отклонить приглашение\"")
         ad = input()
         accdec = ad.lower()
+
+        readfile("players.json")
+        player[n1]["agreement status"] = accdec
+        saving(player, "players.json")
+
         if accdec == 'a':
             accept()
             break
@@ -372,6 +428,11 @@ def accept():
         print("b. \"Нет\"")
         ag = input()
         agreement = ag.lower()
+        
+        readfile("players.json")
+        player[n1]["agreement status"] = agreement
+        saving(player, "players.json")
+
         if agreement == 'a':
             print("\"Так как я за демократию, я отпускаю всех, кто ответил нет.\"")
             input()
@@ -399,19 +460,86 @@ def accept():
             print("\"Ваше согласие всё ещё актуально?\"")
             continue
 
+
 def decline():
     print("И так я дальше жила с потерянной памятью. Жизнью самой обычной школьницы.")
     print("Конец.")
 
 
 print("\"Где я?... Кто я?...\" - задаюсь я таким вопросом на протяжении недели. \"Я даже забыла свое имя…\"")
-name = input("Как меня зовут? \n")
-n1 = name.title()
-if n1 == '':
-    n1 = "Рицу"
+input()
+if not os.path.exists("players.json"):
+    name = input("Как меня зовут? \n")
+
+    n1 = name.title()
+    if n1 == '':
+        n1 = "Рицу"  
+
+    player = {
+        n1 : {
+            "name" : n1
+        }
+    } 
+
+else:
+    player = readfile("players.json")
+
+    while(True):
+        print("Сохранённые имена:")
+        for names in player:
+            print(names)
+
+        dp = input("Что вы хотите сделать?\n 1. Удалить файлы.\n 2. Продолжить игру. \n")
+        if dp == '1':
+            nenter = input("Введите имя из списка выше. \n")
+            nameenter = nenter.title()
+            try:
+                del player[nameenter]
+                saving(player, "players.json")
+            except(KeyError):
+                print("Такого имени нет в списке.")
+                print()
+        elif dp == '2':
+            break
+        else:
+            what_to_do()
+
+
+    playname = list(player.keys())[-1]
+    while(True):
+            print(f"Продолжить игру, как {playname}?")
+            pr = input("Да(Y) или Нет(N)? \n")
+            proceed = pr.upper()
+            if proceed == 'Y':
+                n1 = playname
+                break
+            elif proceed == 'N':
+                name = input("Как меня зовут? \n")
+
+                n1 = name.title()
+                if n1 == '':
+                    n1 = "Рицу"
+                
+                player = readfile("players.json")
+
+                newplayer = {
+                    n1: {
+                        "name" : n1
+                    }
+                }
+                player.update(newplayer)
+                
+                break
+            else:
+                what_to_do()   
+    
+
+
+saving(player, 'players.json')
+
 myname = f"{n1}... Вот как меня зовут..."
 print(myname)
-call = f"{n1} !"
+call = f"{n1}!"
 print(call)
 input()
 print("?... Кто это меня зовёт?")
@@ -421,6 +549,11 @@ while(True):
     b = print("b. \"Нет. Я думаю, не стоит идти...\"")
     ch = input()
     choice = ch.lower()
+
+    player = readfile('players.json')
+    player [n1]["yes/no choice"] = choice
+    saving(player, 'players.json')
+
     if choice == 'a':
         yes_choice()
         input()
@@ -432,3 +565,10 @@ while(True):
     else:
         what_to_do()
         continue
+
+player = readfile("players.json")
+
+with open ("players_output.csv", 'w', newline='') as file:
+    fieldnames = player.keys()
+    writer = csv.DictWriter(file, fieldnames=fieldnames, delimiter=';')
+    writer.writeheader()

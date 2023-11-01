@@ -1,0 +1,50 @@
+{
+    "Kara": {
+        "name": "Kara",
+        "yes/no choice": "b",
+        "opening door status": "b",
+        "mysterious person": "b",
+        "running away from zombie status": "b",
+        "agreement status": "b"
+    },
+    "Anna": {
+        "name": "Anna",
+        "yes/no choice": "a",
+        "going to school status": "a",
+        "ask status": "b",
+        "agreement status": "a"
+    },
+    "Hana": {
+        "name": "Hana",
+        "yes/no choice": "a",
+        "going to school status": "b",
+        "searching school status": "b",
+        "mail status": "a",
+        "agreement status": "b"
+    },
+    "Яра": {
+        "name": "Яра",
+        "yes/no choice": "a",
+        "going to school status": "a",
+        "ask status": "b",
+        "agreement status": "b"
+    },
+    "Рина": {
+        "name": "Рина",
+        "yes/no choice": "a",
+        "opening door status": "",
+        "mysterious person": "a",
+        "running away from zombie status": "b",
+        "agreement status": "a",
+        "going to school status": "b",
+        "searching school status": "a",
+        "mail status": "b"
+    },
+    "Рицу": {
+        "name": "Рицу",
+        "yes/no choice": "a",
+        "going to school status": "a",
+        "ask status": "a",
+        "agreement status": "a"
+    }
+}
