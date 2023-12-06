@@ -566,9 +566,16 @@ while(True):
         what_to_do()
         continue
 
+
 player = readfile("players.json")
 
+eke = list(player.values())[-1]
+kek = dict(eke)
+keys = kek.keys()
+data = [ kek ]
+
 with open ("players_output.csv", 'w', newline='') as file:
-    fieldnames = player.keys()
+    fieldnames = keys
     writer = csv.DictWriter(file, fieldnames=fieldnames, delimiter=';')
     writer.writeheader()
+    writer.writerows(data)
